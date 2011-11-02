@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="  
+            http://www.springframework.org/schema/beans   
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/context   
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+            http://cxf.apache.org/core  
+              http://cxf.apache.org/schemas/core.xsd  
+            http://cxf.apache.org/jaxws   
+            http://cxf.apache.org/schemas/jaxws.xsd  
+            http://cxf.apache.org/jaxrs  
+            http://cxf.apache.org/schemas/jaxrs.xsd"
+	default-dependency-check="none" default-lazy-init="false">
+
+	<!-- Carrega as configurações presentes nos jars do Apache CXF -->
+	<!-- Load the needed resources that are present in the cxf* jars -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<!-- Endpoint WSDL para o Apache CXF -->
+	<!-- Dizemos o endereço, o ID do serviço, em qual bean ele depende -->
+	<jaxws:endpoint id="clubeService" depends-on="clubeServiceImpl"
+		implementor="#clubeServiceImpl" address="/ClubeService">
+	</jaxws:endpoint>
+
+
+	<!-- Referencia ao bean Mapper da nossa Exception <bean id="ClienteExceptionMapper" 
+		class="com.lucianosilva.lab.exception.ClienteExceptionMapper" /> -->
+
+	<!-- Bean que implementa o endpoint do nosso webservice -->
+	<bean id="clubeServiceImpl" class="com.lucianosilva.lab.webservices.impl.ClubeServiceImpl">
+		<property name="clubesDao" ref="clubesDao" />
+	</bean>
+
+	<!-- Bean abstrato para evitar repetição de código -->
+	<bean id="baseSessionFactory" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Implementacao da interface ClienteDAO -->
+	<bean id="clubesDao" class="com.lucianosilva.lab.dao.ClubesDao"
+		parent="baseSessionFactory" />
+
+	<!-- Carregar arquivos de configuracao -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Bean com as configuracoes de conexao com o banco, estamos utilizando 
+		o CommonsDBCP da Apache para gerenciar nosso pool de conexão -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.pass}" />
+		<property name="initialSize" value="${database.initConnections}" />
+		<property name="maxActive" value="${database.maxActive}" />
+		<property name="maxIdle" value="${database.maxIdle}" />
+		<property name="removeAbandoned" value="${database.removeAbandoned}" />
+	</bean>
+
+	<!-- Configuracoes de uma fabrica de sessões -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.lucianosilva.lab.entity.Clube
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>  

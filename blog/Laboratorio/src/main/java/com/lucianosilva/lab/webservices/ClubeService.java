@@ -20,11 +20,11 @@ import com.lucianosilva.lab.entity.Clube;
 public interface ClubeService {
 
 	@WebMethod(operationName="ListAllClubes")
-	@WebResult(name = "ListClube")
+	@WebResult(name = "Clube")
 	public List<Clube> listAll();
 
 	@WebMethod(operationName="FindByClubeName")
-	@WebResult(name = "ListClube")
+	@WebResult(name = "Clube")
 	public List<Clube> findByName(@WebParam(name = "clubeName") String name);
 
 }

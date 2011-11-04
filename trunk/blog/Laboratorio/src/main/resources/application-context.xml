@@ -19,26 +19,8 @@
             http://cxf.apache.org/schemas/jaxrs.xsd"
 	default-dependency-check="none" default-lazy-init="false">
 
-	<!-- Carrega as configurações presentes nos jars do Apache CXF -->
-	<!-- Load the needed resources that are present in the cxf* jars -->
-	<import resource="classpath:META-INF/cxf/cxf.xml" />
-	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
-	<!-- Endpoint WSDL para o Apache CXF -->
-	<!-- Dizemos o endereço, o ID do serviço, em qual bean ele depende -->
-	<jaxws:endpoint id="clubeService" depends-on="clubeServiceImpl"
-		implementor="#clubeServiceImpl" address="/ClubeService">
-	</jaxws:endpoint>
-
-
-	<!-- Referencia ao bean Mapper da nossa Exception <bean id="ClienteExceptionMapper" 
-		class="com.lucianosilva.lab.exception.ClienteExceptionMapper" /> -->
-
-	<!-- Bean que implementa o endpoint do nosso webservice -->
-	<bean id="clubeServiceImpl" class="com.lucianosilva.lab.webservices.impl.ClubeServiceImpl">
-		<property name="clubesDao" ref="clubesDao" />
-	</bean>
+	<!-- Configuracao do CXF Endpoint -->
+	<import resource="cxf-beans.xml"/>
 
 	<!-- Bean abstrato para evitar repetição de código -->
 	<bean id="baseSessionFactory" abstract="true">
@@ -49,27 +31,10 @@
 	<bean id="clubesDao" class="com.lucianosilva.lab.dao.ClubesDao"
 		parent="baseSessionFactory" />
 
-	<!-- Carregar arquivos de configuracao -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:jdbc.properties</value>
-			</list>
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:/Laboratorio</value>
 		</property>
-	</bean>
-
-	<!-- Bean com as configuracoes de conexao com o banco, estamos utilizando 
-		o CommonsDBCP da Apache para gerenciar nosso pool de conexão -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="${database.driver}" />
-		<property name="url" value="${database.url}" />
-		<property name="username" value="${database.user}" />
-		<property name="password" value="${database.pass}" />
-		<property name="initialSize" value="${database.initConnections}" />
-		<property name="maxActive" value="${database.maxActive}" />
-		<property name="maxIdle" value="${database.maxIdle}" />
-		<property name="removeAbandoned" value="${database.removeAbandoned}" />
 	</bean>
 
 	<!-- Configuracoes de uma fabrica de sessões -->
@@ -101,4 +66,4 @@
 		</property>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-</beans>  
+</beans>

@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jaxws="http://cxf.apache.org/jaxws"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xsi:schemaLocation="  
             http://www.springframework.org/schema/beans   
             http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
@@ -12,7 +12,7 @@
             http://www.springframework.org/schema/tx   
             http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
             http://cxf.apache.org/core  
-              http://cxf.apache.org/schemas/core.xsd  
+            http://cxf.apache.org/schemas/core.xsd  
             http://cxf.apache.org/jaxws   
             http://cxf.apache.org/schemas/jaxws.xsd  
             http://cxf.apache.org/jaxrs  
@@ -20,7 +20,7 @@
 	default-dependency-check="none" default-lazy-init="false">
 
 	<!-- Configuracao do CXF Endpoint -->
-	<import resource="cxf-beans.xml"/>
+	<import resource="cxf-beans.xml" />
 
 	<!-- Bean abstrato para evitar repetição de código -->
 	<bean id="baseSessionFactory" abstract="true">

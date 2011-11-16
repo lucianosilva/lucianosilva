@@ -1,9 +1,0 @@
-<projectDescription>
-  <name>laboratorio2-enterprise</name>
-  <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
-  <projects>
-    <project>laboratorio2-services</project>
-  </projects>
-  <buildSpec/>
-  <natures/>
-</projectDescription>

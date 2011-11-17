@@ -39,7 +39,7 @@
 						<webModule>
 							<groupId>com.lucianosilva.lab</groupId>
 							<artifactId>laboratorio2-services</artifactId>
-							<contextRoot>lab/services/</contextRoot>
+							<contextRoot>laboratorio2/services/</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>

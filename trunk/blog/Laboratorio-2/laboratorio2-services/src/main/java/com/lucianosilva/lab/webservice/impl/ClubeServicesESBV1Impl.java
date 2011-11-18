@@ -4,6 +4,7 @@
  */
 package com.lucianosilva.lab.webservice.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -11,6 +12,7 @@ import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.lucianosilva.lab.core.entity.Clube;
 import com.lucianosilva.lab.service.ClubeService;
@@ -24,17 +26,16 @@ import com.lucianosilva.lab.webservice.ClubeServicesESBV1;
  */
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 @WebService(endpointInterface="com.lucianosilva.lab.webservice.ClubeServicesESBV1")
-public class ClubeServicesESBV1Impl implements ClubeServicesESBV1 {
-
+public class ClubeServicesESBV1Impl extends SpringBeanAutowiringSupport implements ClubeServicesESBV1 {
+	
 	@Autowired
-	private ClubeService clubeService;
+	private ClubeService service;
 	
 	/* (non-Javadoc)
 	 * @see com.lucianosilva.lab.webservice.ClubeServicesESBV1#listAll()
 	 */
 	public List<Clube> listAll() {
-		// 
-		return clubeService.listAll();
+		return service.listAll();
 	}
 
 }

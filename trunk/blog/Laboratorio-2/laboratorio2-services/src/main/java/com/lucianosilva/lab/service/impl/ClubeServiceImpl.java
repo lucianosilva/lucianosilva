@@ -7,6 +7,7 @@ package com.lucianosilva.lab.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.lucianosilva.lab.core.entity.Clube;
 import com.lucianosilva.lab.core.repository.ClubeRepository;
@@ -18,7 +19,7 @@ import com.lucianosilva.lab.service.ClubeService;
  * @autor luciano.silva
  * @version $Rev$ $Date$
  */
-public class ClubeServiceImpl implements ClubeService {
+public class ClubeServiceImpl extends SpringBeanAutowiringSupport implements ClubeService {
 
 	@Autowired
 	private ClubeRepository clubeRepository;
@@ -29,11 +30,8 @@ public class ClubeServiceImpl implements ClubeService {
 	 */
 	public List<Clube> listAll() {
 		// 
-		List<Clube> list = null;
-		
-		list = clubeRepository.findAll();
-		
-		return list;
+		return clubeRepository.findAll();
+
 	}
 
 }

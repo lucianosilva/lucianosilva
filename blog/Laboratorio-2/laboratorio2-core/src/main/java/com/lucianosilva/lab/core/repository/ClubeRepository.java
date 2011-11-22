@@ -21,9 +21,7 @@ import com.lucianosilva.lab.core.entity.Clube;
 @Repository
 public interface ClubeRepository extends ReadWriteJpaRepository<Clube, Long> {
 
-
 	@GenericQuery( query = "from Clube where 1=1" )
 	List<Clube> findAll();
-
 
 }

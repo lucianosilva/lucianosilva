@@ -4,7 +4,6 @@
  */
 package com.lucianosilva.lab.webservice.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -25,17 +24,17 @@ import com.lucianosilva.lab.webservice.ClubeServicesESBV1;
  * @version $Rev$ $Date$
  */
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-@WebService(endpointInterface="com.lucianosilva.lab.webservice.ClubeServicesESBV1")
+@WebService(name = "ClubeServicesESBV1", serviceName = "ClubeServicesESBV1", endpointInterface="com.lucianosilva.lab.webservice.ClubeServicesESBV1")
 public class ClubeServicesESBV1Impl extends SpringBeanAutowiringSupport implements ClubeServicesESBV1 {
 	
 	@Autowired
-	private ClubeService service;
+	private ClubeService clubeService;
 	
 	/* (non-Javadoc)
 	 * @see com.lucianosilva.lab.webservice.ClubeServicesESBV1#listAll()
 	 */
-	public List<Clube> listAll() {
-		return service.listAll();
+	public List<Clube> listAll()  throws Exception{
+		return clubeService.listAll();
 	}
 
 }

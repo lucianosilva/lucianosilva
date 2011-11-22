@@ -16,7 +16,6 @@ import com.lucianosilva.lab.core.entity.Clube;
  * @autor luciano.silva
  * @version $Rev$ $Date$
  */
-@Service
 public interface ClubeService {
 
 	List<Clube> listAll();

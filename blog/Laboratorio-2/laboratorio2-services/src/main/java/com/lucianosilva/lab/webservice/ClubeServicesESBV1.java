@@ -23,6 +23,6 @@ public interface ClubeServicesESBV1 {
 
 	@WebMethod(operationName="ListAllClubes")
 	@WebResult(name = "Clube")
-	public List<Clube> listAll();
+	public List<Clube> listAll() throws Exception;
 	
 }

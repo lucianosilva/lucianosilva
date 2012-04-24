@@ -64,9 +64,9 @@ public class Person implements BaseEntity<Long> {
 	@XmlElement(name = "BirthDate", required = false, nillable = true, namespace = Person.NAMESPACE)
 	private Date birthDate;
 	 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATE_DATE", nullable = true, length = 7)
-	@XmlTransient
+	@XmlElement(name = "CreateDate", required = false, nillable = true, namespace = Person.NAMESPACE)
 	private Date createDate;
 
 	

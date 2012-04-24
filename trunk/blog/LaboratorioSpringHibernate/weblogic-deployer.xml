@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="weblogic" default="deploy">
+
+	<property name="wl.home" value="C:\Oracle\Middleware11.1.1.5" />
+	<property name="wl.nome.application" value="app-blog-laboratorio" />
+	<property name="ear.dir" value="D:\workspace\laboratorio\LaboratorioSpringHibernate\lab-enterprise\target\LaboratorioSpringHibernate.ear" />
+	<property name="wl.user" value="weblogic" />
+	<property name="wl.pass" value="welcome1" />
+	<property name="wl.server" value="AdminServer" />
+	<property name="wl.admin.url" value="t3://localhost:7001" />
+
+
+
+	<path id="classpath.weblogic">
+		<fileset dir="${wl.home}/wlserver_10.3/server/lib" includes="*weblogic.jar" />
+	</path>
+
+	<target name="deploy">
+		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" />
+
+		<wldeploy action="deploy" name="${wl.nome.application}" source="${ear.dir}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" />
+	</target>
+
+	<target name="undeploy">
+		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" />
+		<wldeploy action="undeploy" name="${wl.nome.application}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" />
+	</target>
+
+	<!--
+		================================= target: redeploy
+		=================================
+	-->
+	<target name="redeploy">
+		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" />
+		<wldeploy action="redeploy" name="${wl.nome.application}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" />
+	</target>
+
+</project>

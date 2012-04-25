@@ -9,18 +9,24 @@
 	<property name="wl.server" value="AdminServer" />
 	<property name="wl.admin.url" value="t3://localhost:7001" />
 
-
-
 	<path id="classpath.weblogic">
 		<fileset dir="${wl.home}/wlserver_10.3/server/lib" includes="*weblogic.jar" />
 	</path>
 
+	<!--
+		================================= target: deploy
+		=================================
+	-->
 	<target name="deploy">
 		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" />
 
 		<wldeploy action="deploy" name="${wl.nome.application}" source="${ear.dir}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" />
 	</target>
 
+	<!--
+		================================= target: undeploy
+		=================================
+	-->
 	<target name="undeploy">
 		<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" classpathref="classpath.weblogic" />
 		<wldeploy action="undeploy" name="${wl.nome.application}" user="${wl.user}" password="${wl.pass}" adminurl="${wl.admin.url}" targets="${wl.server}" />

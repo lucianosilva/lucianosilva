@@ -79,7 +79,15 @@ public class PersonServiceImpl extends SpringBeanAutowiringSupport implements Pe
 	@Override
 	public Person findById(Long personId) throws Exception {
 		// 
-		return personDAO.findById( personId );
+		Person person = null;
+
+		person = personDAO.findById( personId );
+
+		if( person == null ){
+			throw new Exception("Nenhum registro encontrado para o ID: " + personId);
+		}
+
+		return person;
 	}
 
 }

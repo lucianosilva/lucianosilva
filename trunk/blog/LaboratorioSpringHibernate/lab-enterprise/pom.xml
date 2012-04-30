@@ -8,15 +8,32 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
+	<name>Laboratorio Spring Hibernate - Enterprise</name>
 	<groupId>com.lucianosilva.lab</groupId>
 	<artifactId>lab-enterprise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>ear</packaging>
-
-	<name>Laboratorio Spring Hibernate - Enterprise</name>
-	<url>http://maven.apache.org</url>
-
-
+	
+	<!-- Developer Info -->
+	<developers>
+		<developer>
+			<id>LSC</id>
+			<name>Luciano Silva Carmo</name>
+			<email>luciano@lucianosilva.com</email>
+			<organization></organization>
+			<organizationUrl>http://twitter.com/lucianosilva</organizationUrl>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+	<organization>
+		<url>http://www.lucianosilva.com</url>
+	</organization>
+	<!--  -->
+	
+	<properties>
+		<log4j.version>1.2.16</log4j.version>
+	</properties>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -60,7 +77,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>${log4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -10,10 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,6 +25,8 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import com.lucianosilva.type.PersonType;
 
 /**
  * @author luciano.silva
@@ -44,7 +49,7 @@ public class Person implements BaseEntity<Long> {
     @SequenceGenerator(name = "PERSON_ID", sequenceName = "PERSON_SQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSON_ID")
 	@Column(name = "PERSON_ID", nullable = false, length = 22)
-	@XmlTransient
+	@XmlElement(name = "PersonId", required = true, nillable = false, namespace = Person.NAMESPACE)
 	private Long personId;
 
 	@Column(name = "FIRSTNAME", nullable = false, length = 200)
@@ -56,9 +61,13 @@ public class Person implements BaseEntity<Long> {
 	private String lastName;
 
 	@Column(name = "SEX", nullable = false, length = 1)
-	@XmlElement(name = "Sex", required = true, nillable = false, namespace = Person.NAMESPACE)
+	@XmlTransient
 	private String sex;
 
+	@Transient
+	@XmlElement(name = "Sex", type=PersonType.class, required = true, nillable = false, namespace = Person.NAMESPACE)
+	private PersonType sexo;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "BIRTHDATE", nullable = true, length = 7)
 	@XmlElement(name = "BirthDate", required = false, nillable = true, namespace = Person.NAMESPACE)
@@ -69,7 +78,22 @@ public class Person implements BaseEntity<Long> {
 	@XmlElement(name = "CreateDate", required = false, nillable = true, namespace = Person.NAMESPACE)
 	private Date createDate;
 
+	/**
+	 * Pre Presist.
+	 */
+	@PrePersist
+	void prePersist() {
+		this.sex = this.getSexo().value();
+	}
 	
+	/**
+	 * Post Load.
+	 */
+	@PostLoad
+	void postLoad() {
+		setSexo(PersonType.fromValue(sex));
+	}
+
 	/**
 	 * @return the Id
 	 */
@@ -166,6 +190,20 @@ public class Person implements BaseEntity<Long> {
 	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	
+	/**
+	 * @return the sexo
+	 */
+	public PersonType getSexo() {
+		return sexo;
+	}
+
+	/**
+	 * @param sexo the sexo to set
+	 */
+	public void setSexo(PersonType sexo) {
+		this.sexo = sexo;
 	}
 
 	/*

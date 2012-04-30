@@ -8,17 +8,34 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
+	<name>Laboratorio Spring Hibernate - Services</name>
 	<groupId>com.lucianosilva.lab</groupId>
 	<artifactId>lab-services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	
+	<!-- Developer Info -->
+	<developers>
+		<developer>
+			<id>LSC</id>
+			<name>Luciano Silva Carmo</name>
+			<email>luciano@lucianosilva.com</email>
+			<organization></organization>
+			<organizationUrl>http://twitter.com/lucianosilva</organizationUrl>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+	<organization>
+		<url>http://www.lucianosilva.com</url>
+	</organization>
+	<!--  -->
 
-	<name>Laboratorio Spring Hibernate - Services</name>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<cxf.version>2.2.3</cxf.version>
 		<spring.version>3.0.4.RELEASE</spring.version>
 		<hibernate.version>3.4.0.GA</hibernate.version>
+		<slf4j.version>1.6.4</slf4j.version>
+		<log4j.version>1.2.16</log4j.version>
 	</properties>
 
 	<build>
@@ -85,12 +102,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.0.4.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.4</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- SPRING FRAMEWORK -->
 
@@ -111,13 +128,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.4.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<!-- TESTING DEPS END -->
 

@@ -5,6 +5,10 @@ package com.lucianosilva.webservice.impl;
 
 import java.util.List;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebParam.Mode;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
@@ -28,10 +32,9 @@ public class PersonServiceESBV1Impl extends SpringBeanAutowiringSupport implemen
 	@Autowired
 	private PersonService service;
 
-	/* (non-Javadoc)
-	 * @see com.lucianosilva.webservice.PersonServiceESBV1#obterTodos()
-	 */
 	@Override
+	@WebMethod(operationName = "ObterTodos")
+	@WebResult(name = "Person", targetNamespace = Person.NAMESPACE)
 	public List<Person> obterTodos() throws BusinessWSException{
 		// 
 		try {
@@ -42,7 +45,9 @@ public class PersonServiceESBV1Impl extends SpringBeanAutowiringSupport implemen
 	}
 
 	@Override
-	public List<Person> obterPorNome(String name) throws BusinessWSException {
+	@WebMethod(operationName = "ObterPorNome")
+	@WebResult(name = "Person", targetNamespace = Person.NAMESPACE)
+	public List<Person> obterPorNome(@WebParam(name = "name", mode = Mode.IN) String name) throws BusinessWSException {
 		// 
 		try {
 			return service.findByName(name);
@@ -52,7 +57,9 @@ public class PersonServiceESBV1Impl extends SpringBeanAutowiringSupport implemen
 	}
 
 	@Override
-	public Person obterPorId(Long id) throws BusinessWSException {
+	@WebMethod(operationName = "ObterPorId")
+	@WebResult(name = "Person", targetNamespace = Person.NAMESPACE)
+	public Person obterPorId( @WebParam(name = "id", mode = Mode.IN) Long id ) throws BusinessWSException {
 		//
 		try {
 			return service.findById(id);
@@ -62,7 +69,9 @@ public class PersonServiceESBV1Impl extends SpringBeanAutowiringSupport implemen
 	}
 
 	@Override
-	public Boolean salvar(Person person) throws BusinessWSException {
+	@WebMethod(operationName = "Salvar")
+	@WebResult(name = "Boolean")
+	public Boolean salvar( @WebParam(name = "person", mode = Mode.IN) Person person ) throws BusinessWSException {
 		// 
 		try {
 			return service.saveOrUpdate( person );

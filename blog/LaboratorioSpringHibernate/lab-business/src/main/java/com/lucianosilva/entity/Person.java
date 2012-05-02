@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,13 +41,13 @@ public class Person implements BaseEntity<Long> {
 	 */
 	private static final long serialVersionUID = 2650757315390878777L;
 
-	protected static final String NAMESPACE = "http://www.lucianosilva.com/ESB/Person/V1";
+	public static final String NAMESPACE = "http://www.lucianosilva.com/ESB/Person/V1";
 
 	@Id
     @SequenceGenerator(name = "PERSON_ID", sequenceName = "PERSON_SQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSON_ID")
-	@Column(name = "PERSON_ID", nullable = false, length = 22)
-	@XmlElement(name = "PersonId", required = true, nillable = false, namespace = Person.NAMESPACE)
+	@Column(name = "PERSON_ID", nullable = false, length = 22, updatable = false)
+	@XmlElement(name = "PersonId", required = false, nillable = true, namespace = Person.NAMESPACE)
 	private Long personId;
 
 	@Column(name = "FIRSTNAME", nullable = false, length = 200)
@@ -65,7 +63,7 @@ public class Person implements BaseEntity<Long> {
 	private String sex;
 
 	@Transient
-	@XmlElement(name = "Sex", type=PersonType.class, required = true, nillable = false, namespace = Person.NAMESPACE)
+	@XmlElement(name = "Sexo", type=PersonType.class, required = true, nillable = false, namespace = Person.NAMESPACE)
 	private PersonType sexo;
 	
 	@Temporal(TemporalType.DATE)
@@ -74,25 +72,9 @@ public class Person implements BaseEntity<Long> {
 	private Date birthDate;
 	 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "CREATE_DATE", nullable = true, length = 7)
+	@Column(name = "CREATE_DATE", nullable = true, length = 7, updatable = false)
 	@XmlElement(name = "CreateDate", required = false, nillable = true, namespace = Person.NAMESPACE)
 	private Date createDate;
-
-	/**
-	 * Pre Presist.
-	 */
-	@PrePersist
-	void prePersist() {
-		this.sex = this.getSexo().value();
-	}
-	
-	/**
-	 * Post Load.
-	 */
-	@PostLoad
-	void postLoad() {
-		setSexo(PersonType.fromValue(sex));
-	}
 
 	/**
 	 * @return the Id

@@ -33,8 +33,12 @@ public class PersonDAO extends HibernateGenericDAO<Person, Long> {
 	public List<Person> findLikeName( String name ) {
 		//
 		DetachedCriteria criteria = super.createDetachedCriteria();
-		criteria.add( Restrictions.like("firstName", name, MatchMode.ANYWHERE) );
+
+		criteria.add( Restrictions.disjunction()
+						.add( Restrictions.like("firstName", name))
+						.add( Restrictions.like("lastName", name)) );
+
 		return super.findAllByCriteria( criteria );
 	}
-	
+
 }

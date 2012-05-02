@@ -2,8 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-	
-	<!--  -->
+
+	<!-- -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 		destroy-method="destroy">
@@ -21,17 +21,22 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 				<value>com.lucianosilva.entity.Person</value>
 			</list>
 		</property>
+		<property name="eventListeners">
+			<map>
+				<entry key="pre-insert">
+					<bean class="com.lucianosilva.dao.listener.PersonDAOListener" />
+				</entry>
+				<entry key="pre-update">
+					<bean class="com.lucianosilva.dao.listener.PersonDAOListener" />
+				</entry>
+				<entry key="post-load">
+					<bean class="com.lucianosilva.dao.listener.PersonDAOListener" />
+				</entry>
+			</map>
+		</property>
 	</bean>
 
-	<!--  -->
-	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-	<bean id="jpaVendor"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="showSql" value="true"/>
-		<property name="generateDdl" value="false"/>
-	</bean>
-
-	<!--  -->
+	<!-- -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>

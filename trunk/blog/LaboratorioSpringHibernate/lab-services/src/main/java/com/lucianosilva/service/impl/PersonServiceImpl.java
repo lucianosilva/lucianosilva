@@ -67,9 +67,14 @@ public class PersonServiceImpl extends SpringBeanAutowiringSupport implements Pe
 		Boolean saved = true;
 
 		try{
+
+//			person.setSex( person.getSexo().value() );
+			//
 			personDAO.save( person );
+
 		}catch (Exception e) {
 			// 
+			saved = false;
 			throw new Exception("Erro ao Gravar/Atualizar. " + e.getMessage(), e);
 		}
 

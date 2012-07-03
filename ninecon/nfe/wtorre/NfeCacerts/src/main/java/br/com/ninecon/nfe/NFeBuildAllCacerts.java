@@ -227,6 +227,7 @@ public class NFeBuildAllCacerts {
 	                									proxy.getUrl(),
 	                									Integer.parseInt(proxy.getPort()),
 	                									true);
+	        socket.setSoTimeout(TIMEOUT_WS * 1000);
 
 			logger.debug("Finished SSL Socket ---");
 
